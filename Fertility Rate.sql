@@ -9,6 +9,7 @@ Global Fertility rate Case study,Data analysis,1950 to 2050
 --	Maximum total fertility rate from 1950 to 2023 
 --
 
+Input: 
 
 SELECT
   country_name,
@@ -26,6 +27,12 @@ ORDER BY
   Max_total_fertility_rate DESC
 LIMIT
   1;
+  
+  
+  output:
+  
+  
+  
 
 --
 -- Maximum and Minimum fertility rate for all the age groups by countries in descending order
