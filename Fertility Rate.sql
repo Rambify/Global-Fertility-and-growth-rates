@@ -2,6 +2,7 @@
 Global Fertility rate Case study,Data analysis,1950 to 2050
 */
 
+
 -- ---------------------------------------------------------
 
 --
@@ -156,6 +157,56 @@ ON
   AND age_specific_fertility_rates.country_code = birth_death_growth_rates.country_code
 ORDER BY
   age_specific_fertility_rates.country_name ASC
+  
+  --
+  -- Maximum and minimum crude birth rate, crude death rate, total fertility rate and net migration between 1950 to 2023
+  --
+  
+  
+SELECT
+  birth_death_growth_rates.country_code,
+  birth_death_growth_rates.country_name,
+  MAX(crude_birth_rate) AS max_crude_birth_rate,
+  MAX(crude_death_rate) AS max_crude_death_rate,
+  MIN(crude_birth_rate) AS min_crude_birth_rate,
+  MIN(crude_death_rate) AS min_crude_death_rate,
+  MAX (total_fertility_rate) AS Max_total_fertility_rate,
+  MIN (total_fertility_rate) AS Min_total_fertility_rate,
+  MAX(net_migration) AS max_net_migration,
+  MIN(net_migration) AS min_net_migration,
+
+
+FROM
+  `bigquery-public-data.census_bureau_international.age_specific_fertility_rates` AS age_specific_fertility_rates
+INNER JOIN
+  `bigquery-public-data.census_bureau_international.birth_death_growth_rates` AS birth_death_growth_rates
+ON
+  age_specific_fertility_rates.country_name = birth_death_growth_rates.country_name
+  AND age_specific_fertility_rates.country_code = birth_death_growth_rates.country_code
+
+  WHERE birth_death_growth_rates.year BETWEEN 1950 AND 2023
+GROUP BY
+  birth_death_growth_rates.country_name,
+  birth_death_growth_rates.country_code
+ORDER BY
+  birth_death_growth_rates.country_name ASC
+  
+  
+  --
+  -- Average net migration
+  --
+  
+  
+ SELECT
+  country_name,
+  AVG(net_migration)
+FROM
+  `bigquery-public-data.census_bureau_international.birth_death_growth_rates`
+GROUP BY
+  country_name
+  ORDER BY 
+  country_name
+  
   
   
   
