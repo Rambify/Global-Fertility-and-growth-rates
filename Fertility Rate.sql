@@ -2,10 +2,12 @@
 Global Fertility rate Case study,Data analysis,1950 to 2050
 */
 
+-- ---------------------------------------------------------
 
-
-
+--
 --	Maximum total fertility rate from 1950 to 2023 
+--
+
 
 SELECT 
 country_name,
@@ -21,8 +23,10 @@ ORDER BY Max_total_fertility_rate DESC
 LIMIT 1;
 
 
-
+--
 -- Maximum and Minimum fertility rate for all the age groups by countries in descending order
+--
+
 
 SELECT 
 
@@ -47,8 +51,10 @@ ORDER BY country_name DESC;
 
 
 
-
+--
 --	Maximum and Minimum gross reproduction rate in ascending order (Female life births per woman)
+--
+
 
 
 SELECT 
@@ -65,8 +71,10 @@ GROUP BY country_name
 ORDER BY country_name ASC;
 
 
-
+--
 -- Average Fertility Rate 
+--
+
 
 SELECT
 
@@ -79,7 +87,9 @@ GROUP BY country_name
 ORDER BY country_name ASC;
 
 
+--
 --  Total Fertility Rate greater than 2.1
+--
 
 
 SELECT 
@@ -94,8 +104,10 @@ WHERE year = 2022 AND total_fertility_rate > 2.1
 ORDER BY total_fertility_rate ASC;
 
 
-
+--
 --	Countries where the sex ratio at birth is less than 1.0 in 2022
+--
+
 
 SELECT
 
@@ -109,8 +121,10 @@ ORDER BY country_name ASC,
 sex_ratio_at_birth ASC;
 
 
-
+--
 --  Highest Age-specific fertility rate for age 25-29 (births per 1,000 population) between 1950 to 2050
+--
+
 
 SELECT 
 
@@ -125,3 +139,23 @@ GROUP BY country_name, year
 ORDER BY max_fertility_rate_25_29 DESC
 
 LIMIT 1;
+
+
+--
+-- Merging the data
+--
+
+SELECT
+  *
+FROM
+  `bigquery-public-data.census_bureau_international.age_specific_fertility_rates` AS age_specific_fertility_rates
+INNER JOIN
+  `bigquery-public-data.census_bureau_international.birth_death_growth_rates` AS birth_death_growth_rates
+ON
+  age_specific_fertility_rates.country_name = birth_death_growth_rates.country_name
+  AND age_specific_fertility_rates.country_code = birth_death_growth_rates.country_code
+ORDER BY
+  age_specific_fertility_rates.country_name ASC
+  
+  
+  
