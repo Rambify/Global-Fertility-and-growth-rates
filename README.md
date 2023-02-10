@@ -1,4 +1,4 @@
-# Global-Fertility rate case study includes the data analysis of the fertility data about the countries from all the regions of the world.
+# Age specific fertility rate and birth death growth rate case study includes the data analysis of the fertility data about the countries from all the regions of the world.
 
 
 Overview: The United States Census Bureau’s international dataset provides estimates of country populations since 1950 and projections through 2050. Specifically, the dataset includes midyear population figures broken down by age and gender assignment at birth. Additionally, time-series data is provided for attributes including fertility rates, birth rates, death rates, and migration rates.
