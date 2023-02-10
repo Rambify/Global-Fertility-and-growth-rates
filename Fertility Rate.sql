@@ -145,7 +145,13 @@ GROUP BY
 ORDER BY
   1 ASC;
   
+Output:
 
+[{
+  "country_name": "Afghanistan",
+  "average_total_fertility_rate": "5.4135416666666654"
+ 
+ ...........]
 
 --
 --  Total Fertility Rate greater than 2.1
