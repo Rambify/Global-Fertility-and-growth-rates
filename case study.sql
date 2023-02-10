@@ -153,6 +153,7 @@ Output:
  
  ...........]
 
+
 --
 --  Total Fertility Rate greater than 2.1
 --
@@ -171,7 +172,16 @@ WHERE
 ORDER BY
   total_fertility_rate ASC;
   
+  Output:
   
+  [{
+  "country_name": "Kazakhstan",
+  "total_fertility_rate": "2.108"
+}, {
+  "country_name": "Cabo Verde",
+  "total_fertility_rate": "2.128"
+   
+   ......]
   
 
 --
@@ -191,6 +201,20 @@ WHERE
 ORDER BY
   1 ASC,
   2 ASC;
+
+
+Output:
+
+[{
+  "country_name": "Kazakhstan",
+  "sex_ratio_at_birth": "0.9368"
+}, {
+  "country_name": "Nauru",
+  "sex_ratio_at_birth": "0.8333"
+}, {
+  "country_name": "United States",
+  "sex_ratio_at_birth": "-9.0"
+}]
 
 
 --
@@ -217,6 +241,15 @@ ORDER BY
   3 DESC
 LIMIT
   1;
+
+
+Output:
+
+[{
+  "country_name": "Pakistan",
+  "year": "1987",
+  "max_fertility_rate_25_29": "369.2"
+}]
 
 
 --
@@ -251,10 +284,6 @@ ORDER BY
 SELECT
   birth_death_growth_rates.country_code,
   birth_death_growth_rates.country_name,
-  MAX(crude_birth_rate) AS max_crude_birth_rate,
-  MAX(crude_death_rate) AS max_crude_death_rate,
-  MIN(crude_birth_rate) AS min_crude_birth_rate,
-  MIN(crude_death_rate) AS min_crude_death_rate,
   MAX (total_fertility_rate) AS max_total_fertility_rate,
   MIN (total_fertility_rate) AS min_total_fertility_rate,
   MAX(net_migration) AS max_net_migration,
@@ -281,46 +310,66 @@ ORDER BY
   [{
   "country_code": "AF",
   "country_name": "Afghanistan",
-  "max_crude_birth_rate": "54.44",
-  "max_crude_death_rate": "24.34",
-  "min_crude_birth_rate": "34.9",
-  "min_crude_death_rate": "11.96",
   "max_total_fertility_rate": "8.0",
   "min_total_fertility_rate": "2.75",
   "max_net_migration": "116.76",
-  
+  "min_net_migration": "-156.85"
+   
+   .....]
+   
+   
   --
   -- Average net migration
   --
   
+  Input:
   
  SELECT
   country_name,
-  AVG(net_migration)
+  AVG(net_migration) AS average_net_migration
 FROM
   `bigquery-public-data.census_bureau_international.birth_death_growth_rates`
+WHERE
+  year BETWEEN 1950
+  AND 2023
 GROUP BY
   country_name
-  ORDER BY 
-  country_name;
+ORDER BY
+  country_name ASC;
   
+ Output: 
+  
+  
+  [{
+  "country_name": "Afghanistan",
+  "average_net_migration": "-5.74822222222222"
+}, {
+   
+   ....]
+   
+   
   
   --
-  -- 
+  -- Join the columns from two tabes
+  --
+  
+  Input:
+  
+  
    
-   SELECT
+     SELECT
   age.country_name,
-  age.sex_ratio_at_birth,
+  age.total_fertility_rate,
   birth.growth_rate
 FROM (
   SELECT
     country_name,
-    sex_ratio_at_birth
+    total_fertility_rate
   FROM
     `bigquery-public-data.census_bureau_international.age_specific_fertility_rates`
   WHERE
     year = 2022
-    AND sex_ratio_at_birth < 1.0 ) age
+    AND total_fertility_rate < 2.1 ) age
 INNER JOIN (
   SELECT
     country_name,
@@ -334,4 +383,18 @@ ON
 ORDER BY
   1 ASC,
   2 ASC;
+  
+  
+  
+  Output:
+  
+ [{
+  "country_name": "Albania",
+  "total_fertility_rate": "1.5406",
+  "growth_rate": "0.217"
+}, {
+   
+   .....]
+  
+  -------------------------------------------------------------------------------
   
