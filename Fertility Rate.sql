@@ -305,5 +305,33 @@ GROUP BY
   country_name;
   
   
-  
+  --
+  -- 
+   
+   SELECT
+  age.country_name,
+  age.sex_ratio_at_birth,
+  birth.growth_rate
+FROM (
+  SELECT
+    country_name,
+    sex_ratio_at_birth
+  FROM
+    `bigquery-public-data.census_bureau_international.age_specific_fertility_rates`
+  WHERE
+    year = 2022
+    AND sex_ratio_at_birth < 1.0 ) age
+INNER JOIN (
+  SELECT
+    country_name,
+    growth_rate
+  FROM
+    `bigquery-public-data.census_bureau_international.birth_death_growth_rates`
+  WHERE
+    year = 2022 ) birth
+ON
+  age.country_name = birth.country_name
+ORDER BY
+  1 ASC,
+  2 ASC;
   
