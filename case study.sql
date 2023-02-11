@@ -155,33 +155,25 @@ Output:
 
 
 --
---  Total Fertility Rate greater than 2.1
+--  Number of countries with Total Fertility Rate greater than 2.1
 --
 
 Input:
 
 
 SELECT
-  country_name,
-  total_fertility_rate
+  COUNT(DISTINCT(total_fertility_rate)) AS Number_of_countries
 FROM
   `bigquery-public-data.census_bureau_international.age_specific_fertility_rates`
 WHERE
   year = 2022
   AND total_fertility_rate > 2.1
-ORDER BY
-  total_fertility_rate ASC;
   
   Output:
   
-  [{
-  "country_name": "Kazakhstan",
-  "total_fertility_rate": "2.108"
-}, {
-  "country_name": "Cabo Verde",
-  "total_fertility_rate": "2.128"
-   
-   ......]
+[{
+  "Number_of_countries": "94"
+}]
   
 
 --
@@ -233,7 +225,7 @@ FROM
   `bigquery-public-data.census_bureau_international.age_specific_fertility_rates`
 WHERE
   year BETWEEN 1950
-  AND 2023
+  AND 2050
 GROUP BY
   country_name,
   year
